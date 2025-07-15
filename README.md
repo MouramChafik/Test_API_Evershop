@@ -23,13 +23,16 @@ Les résultats de tests sont reportés via **Allure**, offrant un rapport visuel
 
 ```
 /
-├── postman/
+├── allure-results/                               # Résultats bruts des tests Allure
+├── allure-report/                                # Rapport Allure généré (HTML)
+│ 
+│ 
+├── Test/
 │   ├── evershopAPI.postman_collection.json           # Collection Postman des APIs EverShop
 │   ├── url.postman_environment.json                  # Environnement Postman 
 │   ├── workspace.postman_globals.json                # Environnement Postman 
-├── reports/
-│   ├── allure-results/                               # Résultats bruts des tests Allure
-│   ├── allure-report/                                # Rapport Allure généré (HTML)
+│ 
+│ 
 ├── package.json
 ├── README.md
 └── run-tests.sh                                      # Script shell pour lancer les tests et rapports
