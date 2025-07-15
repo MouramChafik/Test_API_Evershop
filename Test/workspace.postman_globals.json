@@ -1,0 +1,93 @@
+{
+	"id": "30a1796f-7926-4c87-8fb5-b4af4e046a8e",
+	"values": [
+		{
+			"key": "products_uuid",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Globalproducts_uuid",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "category_uuid",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "carts_uuid",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "carts_cartId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "carts_itemId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "promotionId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "LoginToken",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "carts_cartIdUpdated",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "customerId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "pageId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "orderId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "shipmentId",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2025-07-11T14:04:18.276Z",
+	"_postman_exported_using": "Postman/11.53.5"
+}

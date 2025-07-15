@@ -1,0 +1,1 @@
+{"data":{"shipment_id":26,"uuid":"090a3ab2-7b62-4c07-97ae-eaac658a8f9b","shipment_order_id":36,"carrier":null,"tracking_number":"FR1234567890","created_at":"2025-07-15T08:50:29.337Z","updated_at":"2025-07-15T08:50:29.337Z"}}

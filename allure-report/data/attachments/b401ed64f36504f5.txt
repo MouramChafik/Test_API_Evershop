@@ -1,0 +1,4 @@
+{
+  "attribute_codes": ["color", "size"],
+  "attribute_group_id": 1
+}

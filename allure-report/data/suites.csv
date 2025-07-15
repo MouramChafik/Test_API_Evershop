@@ -1,0 +1,164 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","249","Products","evershopAPI","Tue Jul 15 10:50:25 CEST 2025","passed","Tue Jul 15 10:50:25 CEST 2025","","Products","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","447","Create a customer","evershopAPI","Tue Jul 15 10:50:29 CEST 2025","passed","Tue Jul 15 10:50:29 CEST 2025","","Customer","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","104","Patch attributeGroups","evershopAPI","Tue Jul 15 10:50:24 CEST 2025","passed","Tue Jul 15 10:50:24 CEST 2025","","Attribute Groupe","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","203","Products","evershopAPI","Tue Jul 15 10:50:25 CEST 2025","passed","Tue Jul 15 10:50:25 CEST 2025","","Products","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","124","Add payment method","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","109","Add item to cart","evershopAPI","Tue Jul 15 10:50:27 CEST 2025","passed","Tue Jul 15 10:50:27 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","184","Create an order","evershopAPI","Tue Jul 15 10:50:29 CEST 2025","passed","Tue Jul 15 10:50:29 CEST 2025","","Order","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","130","Shipping Method","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","Shipping Method","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","260","Update a customer","evershopAPI","Tue Jul 15 10:50:30 CEST 2025","passed","Tue Jul 15 10:50:30 CEST 2025","","Customer","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","115","Products","evershopAPI","Tue Jul 15 10:50:25 CEST 2025","passed","Tue Jul 15 10:50:25 CEST 2025","","variant","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","229","Add address shipping","evershopAPI","Tue Jul 15 10:50:27 CEST 2025","passed","Tue Jul 15 10:50:27 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","302","login a customer","evershopAPI","Tue Jul 15 10:50:29 CEST 2025","passed","Tue Jul 15 10:50:30 CEST 2025","","Customer","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","104","Delete attributeGroups","evershopAPI","Tue Jul 15 10:50:24 CEST 2025","failed","Tue Jul 15 10:50:25 CEST 2025","","Attribute Groupe","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","165","Logout User","evershopAPI","Tue Jul 15 10:50:31 CEST 2025","passed","Tue Jul 15 10:50:31 CEST 2025","","User","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","104","Create a shipment","evershopAPI","Tue Jul 15 10:50:29 CEST 2025","passed","Tue Jul 15 10:50:29 CEST 2025","","Order","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","101","Delete a coupon","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:29 CEST 2025","","Promotion","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","213","Create a coupon","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","Promotion","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","201","Add address billing","evershopAPI","Tue Jul 15 10:50:27 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","118","Update a coupon","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","Promotion","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","175","Update a page","evershopAPI","Tue Jul 15 10:50:30 CEST 2025","passed","Tue Jul 15 10:50:30 CEST 2025","","Cms Page","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","71","logout a customer","evershopAPI","Tue Jul 15 10:50:30 CEST 2025","passed","Tue Jul 15 10:50:30 CEST 2025","","Customer","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","92","Create a page","evershopAPI","Tue Jul 15 10:50:30 CEST 2025","passed","Tue Jul 15 10:50:30 CEST 2025","","Cms Page","",""
+"This returns a `token` that you can use to retrieve information later on.
+
+We have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection.","564","Login","evershopAPI","Tue Jul 15 10:50:23 CEST 2025","passed","Tue Jul 15 10:50:24 CEST 2025","","login","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","219","categories","evershopAPI","Tue Jul 15 10:50:25 CEST 2025","passed","Tue Jul 15 10:50:26 CEST 2025","","Category","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","89","Apply a coupon","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","Promotion","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","107","Update a page Copy","evershopAPI","Tue Jul 15 10:50:30 CEST 2025","passed","Tue Jul 15 10:50:31 CEST 2025","","Cms Page","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","175","variant item","evershopAPI","Tue Jul 15 10:50:25 CEST 2025","passed","Tue Jul 15 10:50:25 CEST 2025","","variant","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","119","Add customer info","evershopAPI","Tue Jul 15 10:50:27 CEST 2025","passed","Tue Jul 15 10:50:27 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","169","variant","evershopAPI","Tue Jul 15 10:50:25 CEST 2025","passed","Tue Jul 15 10:50:25 CEST 2025","","variant","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","71","Payment Method","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","Payment Method","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","123","delete Attribute","evershopAPI","Tue Jul 15 10:50:24 CEST 2025","passed","Tue Jul 15 10:50:24 CEST 2025","","Attribute","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","199","Remove item from cart","evershopAPI","Tue Jul 15 10:50:27 CEST 2025","passed","Tue Jul 15 10:50:27 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","183","categories","evershopAPI","Tue Jul 15 10:50:26 CEST 2025","passed","Tue Jul 15 10:50:26 CEST 2025","","Category","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","187","Patch Attribute","evershopAPI","Tue Jul 15 10:50:24 CEST 2025","passed","Tue Jul 15 10:50:24 CEST 2025","","Attribute","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","87","Delete a customer","evershopAPI","Tue Jul 15 10:50:30 CEST 2025","passed","Tue Jul 15 10:50:30 CEST 2025","","Customer","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","206","attributeGroups","evershopAPI","Tue Jul 15 10:50:24 CEST 2025","passed","Tue Jul 15 10:50:24 CEST 2025","","Attribute Groupe","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","152","Add shipping method","evershopAPI","Tue Jul 15 10:50:28 CEST 2025","passed","Tue Jul 15 10:50:28 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","175","Create a new cart","evershopAPI","Tue Jul 15 10:50:26 CEST 2025","passed","Tue Jul 15 10:50:27 CEST 2025","","cart","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","496","categories","evershopAPI","Tue Jul 15 10:50:26 CEST 2025","passed","Tue Jul 15 10:50:26 CEST 2025","","Category","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","104","Update a shipment","evershopAPI","Tue Jul 15 10:50:29 CEST 2025","passed","Tue Jul 15 10:50:29 CEST 2025","","Order","",""
+"Generated from cURL: curl
+  -H ""Accept: application/json""
+  -H ""Cookie: asid=<your admin cookie>""
+  https://<your domain>/api/attributes","211","post Attribute","evershopAPI","Tue Jul 15 10:50:24 CEST 2025","passed","Tue Jul 15 10:50:24 CEST 2025","","Attribute","",""

@@ -1,0 +1,13 @@
+{
+    "Accept": "application/json",
+    "Cookie": "asid=s%3ACmSosLqNB45JXyG2yintuH0Z_zQAHl7D.H%2FHbTXJNALIS6h4DeEwsJBOxti1IDer70oB%2BNqHvV5Y",
+    "Authorization": "Bearer CmSosLqNB45JXyG2yintuH0Z_zQAHl7D",
+    "country": "FR",
+    "province": "FR-ARA",
+    "User-Agent": "PostmanRuntime/7.39.1",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "f3a9a488-96d0-44f2-a28f-02ec337def11",
+    "Host": "localhost:3000",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive"
+}

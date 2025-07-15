@@ -1,0 +1,1 @@
+{"data":{"customer_id":26,"uuid":"076f9f30-0e49-4e81-a226-d11415ca790d","status":1,"group_id":1,"email":"client@example.com","full_name":"Jean Davide","created_at":"2025-07-15T08:50:29.560Z","updated_at":"2025-07-15T08:50:29.560Z"}}

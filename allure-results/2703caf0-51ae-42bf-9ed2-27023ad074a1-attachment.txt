@@ -1,0 +1,6 @@
+{
+  "status": 1,
+  "email": "client2@example.com",
+  "password": "MotDePasseSecurise123!",
+  "full_name": "Jean Dupont"
+}

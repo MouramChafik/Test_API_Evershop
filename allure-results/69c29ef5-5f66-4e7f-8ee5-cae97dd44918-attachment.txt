@@ -1,0 +1,1 @@
+{"data":{"method":{"code":"stripe","name":"stripe"}}}

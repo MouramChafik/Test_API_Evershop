@@ -1,0 +1,4 @@
+{
+  "method_code": "stripe",
+  "method_name": "stripe"
+}

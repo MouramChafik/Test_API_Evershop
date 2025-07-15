@@ -1,0 +1,13 @@
+{
+  "address": {
+    "full_name": "Jean Dupont",
+    "telephone": "0601020304",
+    "address_1": "10 rue de la République",
+    "address_2": "Batiment B",
+    "city": "Lyon",
+    "province": "FR-ARA",
+    "country": "FR",
+    "postcode": "69002"
+  },
+  "type": "billing"
+}

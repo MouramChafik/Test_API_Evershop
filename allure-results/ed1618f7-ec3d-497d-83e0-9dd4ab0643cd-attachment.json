@@ -1,0 +1,11 @@
+{
+    "Accept": "*/*",
+    "Cookie": "asid=s%3ACmSosLqNB45JXyG2yintuH0Z_zQAHl7D.H%2FHbTXJNALIS6h4DeEwsJBOxti1IDer70oB%2BNqHvV5Y",
+    "Authorization": "Bearer CmSosLqNB45JXyG2yintuH0Z_zQAHl7D",
+    "User-Agent": "PostmanRuntime/7.39.1",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "269d180e-e17e-4b9d-ab09-7d0656401e3e",
+    "Host": "localhost:3000",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive"
+}

@@ -1,0 +1,3206 @@
+{
+	"info": {
+		"_postman_id": "cc04b047-cfc9-4a67-aeb0-801ea43dbda4",
+		"name": "evershopAPI",
+		"description": "# ⛓️ Get started here\n\nPostman allows you to test your APIs using simple Javascript code. You can evaluate your response body, headers, cookies, and more using the [ChaiJS BDD](https://www.chaijs.com/api/bdd/) syntax.\n\nThis template guides you through the process of setting up an integration test to ensure that all individual components of an API function together seamlessly.\n\nThe API under test in this collection includes three endpoints for registering and receiving a token, accessing your unique generated name, and unregistering a token:\n\n- POST `/register`\n- POST `/unregister`\n- GET `/my-name`\n    \n\nBy setting up requests in the order of the operation, we can test the flow of data to and from the endpoints and ensure they work together as expected. We also verify that the data persists between requests on the back end.\n\n## 🔖 **How to use this template**\n\n**Step 1:** Check out the requests' documentation to learn more about -\n\n- what each request is meant to do.\n- the tests we've added against each one.\n    \n\n**Step 2:** Run this collection by clicking on \"Run\".\n\n<img src=\"https://content.pstmn.io/84019b0f-69c8-4c5f-98b9-2c90a6f9a0b1/Y29sbGVjdGlvbi1ydW5uZXItYnV0dG9uLmpwZWc=\" alt=\"\" height=\"103\" width=\"266\">\n\n**Step 3:** To customize this template, replace the request URLs with your API endpoints and add or edit the tests if needed.\n\n## ℹ️ Resources\n\n[Scripting in Postman](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/)\n\n[Test script examples](https://learning.postman.com/docs/writing-scripts/script-references/test-examples/)\n\n[Postman Sandbox API reference](https://learning.postman.com/docs/sending-requests/grpc/postman-sandbox-api/#writing-assertions)\n\n[Using the Collection Runner](https://learning.postman.com/docs/collections/running-collections/intro-to-collection-runs/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31429893",
+		"_collection_link": "https://martian-comet-250238.postman.co/workspace/api-test~c146289f-c24b-4317-a791-95035d18c0ec/collection/31429893-cc04b047-cfc9-4a67-aeb0-801ea43dbda4?action=share&source=collection_link&creator=31429893"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"An access token (sid) is returned\", () => {",
+									"    const jsonData = pm.response.json();",
+									"",
+									"    pm.expect(jsonData).to.have.property('data');",
+									"    pm.expect(jsonData.data).to.have.property('sid');",
+									"    pm.expect(jsonData.data.sid).to.be.a('string');",
+									"",
+									"    // Stocker le sid comme token dans une variable globale (ou env)",
+									"    pm.globals.set('LoginToken', jsonData.data.sid);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "apikey",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZhYXJ4ZGt6emVudnBqeXdyY2FkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA0ODgyOTksImV4cCI6MjA2NjA2NDI5OX0.ueqEJuzXx57snaMB2PtxOWcyGqvQSmkkbs7k4ZfhxPE",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\" : \"chafikdev23@gmail.com\",\n    \"password\" : \"Chafikdev23\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"user",
+								"login"
+							]
+						},
+						"description": "This returns a `token` that you can use to retrieve information later on.\n\nWe have included a test to confirm if a token is returned. We have also added test scripts to copy the token to the `token` collection variable. This makes it easy for us to reuse this token in other requests in the collection."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attribute",
+			"item": [
+				{
+					"name": "post Attribute",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present\", function () {",
+									"    let jsonData;",
+									"    try {",
+									"        jsonData = pm.response.json();",
+									"        if (jsonData?.data?.uuid) {",
+									"            pm.environment.set(\"attribute_uuid\", jsonData.data.uuid);",
+									"        } else {",
+									"            console.warn(\"uuid not found in response data\");",
+									"        }",
+									"    } catch (e) {",
+									"        console.error(\"Invalid JSON:\", e);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"attribute_name\": \"Style\",\n  \"attribute_code\": \"style\",\n  \"type\": \"select\",\n  \"is_required\": 0,\n  \"display_on_frontend\": 1,\n  \"groups\": [1],\n  \"options\": [\n    { \"option_text\": \"Classique\" },\n    { \"option_text\": \"Décontracté\" },\n    { \"option_text\": \"Élégant\" }\n  ]\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Attribute",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"attribute_name\": \"Style\",\n  \"attribute_code\": \"style\",\n  \"type\": \"select\",\n  \"is_required\": 0,\n  \"display_on_frontend\": 1,\n  \"groups\": [1],\n  \"options\": [\n    { \"option_text\": \"Classique\" },\n    { \"option_text\": \"Décontracté\" },\n    { \"option_text\": \"Sport\" },\n    { \"option_text\": \"Élégant\" }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes/{{attribute_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes",
+								"{{attribute_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "delete Attribute",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"attribute_name\": \"Materialtest\",\n  \"attribute_code\": \"material3\",\n  \"type\": \"material\",\n  \"is_required\": 0,\n  \"display_on_frontend\": 1,\n  \"sort_order\": 1,\n  \"is_filterable\": 0,\n  \"groups\": [1]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes/{{attribute_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes",
+								"{{attribute_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attribute Groupe",
+			"item": [
+				{
+					"name": "attributeGroups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present\", function () {",
+									"    let jsonData;",
+									"    try {",
+									"        jsonData = pm.response.json();",
+									"        if (jsonData?.data?.uuid) {",
+									"            pm.environment.set(\"attributeGroups_uuid\", jsonData.data.uuid);",
+									"        } else {",
+									"            console.warn(\"uuid not found in response data\");",
+									"        }",
+									"    } catch (e) {",
+									"        console.error(\"Invalid JSON:\", e);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"group_name\": \"Technical Specs7\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributeGroups",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributeGroups"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Patch attributeGroups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present\", function () {",
+									"    let jsonData;",
+									"    try {",
+									"        jsonData = pm.response.json();",
+									"        if (jsonData?.data?.uuid) {",
+									"            pm.environment.set(\"attributeGroups_uuid\", jsonData.data.uuid);",
+									"        } else {",
+									"            console.warn(\"uuid not found in response data\");",
+									"        }",
+									"    } catch (e) {",
+									"        console.error(\"Invalid JSON:\", e);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"group_name\": \"Technical Specs 5\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributeGroups/{{attributeGroups_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributeGroups",
+								"{{attributeGroups_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete attributeGroups",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present or log backend error\", function () {",
+									"  try {",
+									"    const contentType = pm.response.headers.get(\"Content-Type\");",
+									"",
+									"    if (!contentType || !contentType.includes(\"application/json\")) {",
+									"      throw new Error(\"Réponse non-JSON\");",
+									"    }",
+									"",
+									"    const jsonData = pm.response.json();",
+									"",
+									"    // Si on a une clé \"error\" dans la réponse => log le message",
+									"    if (jsonData.error) {",
+									"      console.error(\"Erreur renvoyée par l'API:\", jsonData.error.message);",
+									"      throw new Error(\"Erreur backend: \" + jsonData.error.message);",
+									"    }",
+									"",
+									"    if (!jsonData.data) {",
+									"      throw new Error(\"Champ 'data' manquant dans la réponse\");",
+									"    }",
+									"",
+									"    if (!jsonData.data.uuid) {",
+									"      throw new Error(\"Champ 'uuid' manquant dans data\");",
+									"    }",
+									"",
+									"    pm.environment.set(\"attribute_uuid\", jsonData.data.uuid);",
+									"    console.log(\"UUID enregistré avec succès:\", jsonData.data.uuid);",
+									"",
+									"  } catch (error) {",
+									"    console.error(\"Test échoué :\", error.message);",
+									"    pm.expect.fail(\"Erreur capturée : \" + error.message);",
+									"  }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=s%3ApPrtew8SYynavexGBgffIpKSwUNugFWx.53TVhFeJg%2FetNJ7Y2NGt3JDdY1Bl7vN3OORsPKxy390",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"group_name\": \"Technical Specs test\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributeGroups/{{attributeGroups_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributeGroups",
+								"{{attributeGroups_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present\", function () {",
+									"    let jsonData;",
+									"    try {",
+									"        jsonData = pm.response.json();",
+									"        if (jsonData?.data?.uuid) {",
+									"            pm.environment.set(\"Globalproducts_uuid\", jsonData.data.uuid);",
+									"        } else {",
+									"            console.warn(\"uuid not found in response data\");",
+									"        }",
+									"    } catch (e) {",
+									"        console.error(\"Invalid JSON:\", e);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"T-shirt Cool2\",\n  \"url_key\": \"tshirt-cool2\",\n  \"meta_title\": \"T-shirt Cool pour l’été\",\n  \"status\": 1,\n  \"sku\": \"TSHIRT-COOL-0021\",\n  \"price\": 19.99,\n  \"weight\": 0.2,\n  \"qty\": 100,\n  \"group_id\": 1,\n  \"visibility\": 1,\n  \"options\": [\n    {\n      \"option_name\": \"couleur\",\n      \"option_type\": \"select\",\n      \"is_required\": 1,\n      \"values\": [\n        { \"value\": \"S\", \"extra_price\": 0 },\n        { \"value\": \"M\", \"extra_price\": 0 },\n        { \"value\": \"L\", \"extra_price\": 0 }\n      ]\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"products"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present\", function () {",
+									"    let jsonData;",
+									"    try {",
+									"        jsonData = pm.response.json();",
+									"        if (jsonData?.data?.uuid) {",
+									"            pm.environment.set(\"Globalproducts_uuid\", jsonData.data.uuid);",
+									"        } else {",
+									"            console.warn(\"uuid not found in response data\");",
+									"        }",
+									"    } catch (e) {",
+									"        console.error(\"Invalid JSON:\", e);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"T-shirt Noir\",\n  \"url_key\": \"tshirt-Noir\",\n  \"meta_title\": \"T-shirt Cool pour l’été\",\n  \"status\": 1,\n  \"sku\": \"TSHIRT-COOL-0021Noir\",\n  \"price\": 19.99,\n  \"weight\": 0.2,\n  \"qty\": 100,\n  \"group_id\": 1,\n  \"visibility\": 1,\n  \"options\": [\n    {\n      \"option_name\": \"Taille\",\n      \"option_type\": \"select\",\n      \"is_required\": 1,\n      \"values\": [\n        { \"value\": \"S\", \"extra_price\": 0 },\n        { \"value\": \"M\", \"extra_price\": 0 },\n        { \"value\": \"L\", \"extra_price\": 0 }\n      ]\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/products/{{Globalproducts_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"{{Globalproducts_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "variant",
+			"item": [
+				{
+					"name": "variant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present\", function () {",
+									"    let jsonData;",
+									"    try {",
+									"        jsonData = pm.response.json();",
+									"        if (jsonData?.data?.uuid) {",
+									"            pm.environment.set(\"variant_uuid\", jsonData.data.uuid);",
+									"        } else {",
+									"            console.warn(\"uuid not found in response data\");",
+									"        }",
+									"    } catch (e) {",
+									"        console.error(\"Invalid JSON:\", e);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"attribute_codes\": [\"color\", \"size\"],\n  \"attribute_group_id\": 1\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/variantGroups",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"variantGroups"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "variant item",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"product_id\": \"{{Globalproducts_uuid}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/variantGroups/{{variant_uuid}}/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"variantGroups",
+								"{{variant_uuid}}",
+								"items"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"T-shirt Cool2\",\n  \"url_key\": \"tshirt-cool2\",\n  \"meta_title\": \"T-shirt Cool pour l’été\",\n  \"status\": 1,\n  \"sku\": \"TSHIRT-COOL-0021\",\n  \"price\": 19.99,\n  \"weight\": 0.2,\n  \"qty\": 100,\n  \"group_id\": 1,\n  \"visibility\": 1,\n  \"options\": [\n    {\n      \"option_name\": \"Taille\",\n      \"option_type\": \"select\",\n      \"is_required\": 1,\n      \"values\": [\n        { \"value\": \"S\", \"extra_price\": 0 },\n        { \"value\": \"M\", \"extra_price\": 0 },\n        { \"value\": \"L\", \"extra_price\": 0 }\n      ]\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/products/{{Globalproducts_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"products",
+								"{{Globalproducts_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"category_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"category_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Chaussures\",\n  \"description\": \"Tous les modèles de chaussures\",\n  \"image\": \"https://img.freepik.com/photos-gratuite/chaussures-marron-isoles-fond-blanc-studio_268835-1354.jpg\",\n  \"meta_title\": \"Chaussures tendance 2025\",\n  \"meta_description\": \"Découvrez notre collection de chaussures\",\n  \"meta_keywords\": \"chaussures, baskets, mode\",\n  \"url_key\": \"chaussures\",\n  \"status\": 1,\n  \"include_in_nav\": 1,\n  \"parent_id\": 0,\n  \"position\": 1\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categories"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"category_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"category_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Chaussures Homme\",\n  \"meta_title\": \"Chaussures Homme 2025\",\n  \"status\": 1\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/{{category_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{category_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"category_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"category_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Chaussures Homme\",\n  \"meta_title\": \"Chaussures Homme 2025\",\n  \"status\": 1\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/categories/{{category_uuid}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"categories",
+								"{{category_uuid}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "Create a new cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set attribute UUID if present\", function () {",
+									"    let jsonData;",
+									"    try {",
+									"        jsonData = pm.response.json();",
+									"        if (jsonData?.data?.cartId) {",
+									"    pm.globals.set(\"carts_cartId\", jsonData.data.cartId);",
+									"        } else {",
+									"            console.warn(\"uuid not found in response data\");",
+									"        }",
+									"    } catch (e) {",
+									"        console.error(\"Invalid JSON:\", e);",
+									"    }",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Referrer-Policy",
+								"value": "strict-origin-when-cross-origin",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customer_full_name\": \"Chafik amin\",\n  \"customer_email\": \"client@example.com\",\n  \"items\": [\n    {\n      \"sku\": \"SCS-24680\",\n      \"qty\": 1\n    },\n    {\n      \"sku\": \"CLL-98765\",\n      \"qty\": 1\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/carts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"carts"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Add item to cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_cartIdUpdated\", jsonData.data.cartId);",
+									"    pm.globals.set(\"carts_itemId\", jsonData.data.item.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sku\": \"SCS-24680\",\n  \"qty\": 1\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cart/{{carts_cartId}}/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"{{carts_cartId}}",
+								"items"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Remove item from cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sku\": \"1234F\",\n  \"qty\": 1\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cart/{{carts_cartIdUpdated}}/items/{{carts_itemId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"{{carts_cartIdUpdated}}",
+								"items",
+								"{{carts_itemId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Add customer info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"client@example.com\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/carts/{{carts_cartIdUpdated}}/contacts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"{{carts_cartIdUpdated}}",
+								"contacts"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Add address shipping",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address\": {\n    \"full_name\": \"Jean Dupont\",\n    \"telephone\": \"0601020304\",\n    \"address_1\": \"10 rue de la République\",\n    \"address_2\": \"Batiment B\",\n    \"city\": \"Lyon\",\n    \"province\": \"FR-ARA\",\n    \"country\": \"FR\",\n    \"postcode\": \"69002\"\n  },\n  \"type\": \"shipping\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/carts/{{carts_cartIdUpdated}}/addresses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"{{carts_cartIdUpdated}}",
+								"addresses"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Add address billing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address\": {\n    \"full_name\": \"Jean Dupont\",\n    \"telephone\": \"0601020304\",\n    \"address_1\": \"10 rue de la République\",\n    \"address_2\": \"Batiment B\",\n    \"city\": \"Lyon\",\n    \"province\": \"FR-ARA\",\n    \"country\": \"FR\",\n    \"postcode\": \"69002\"\n  },\n  \"type\": \"billing\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/carts/{{carts_cartIdUpdated}}/addresses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"{{carts_cartIdUpdated}}",
+								"addresses"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Add shipping method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Referrer-Policy",
+								"value": "strict-origin-when-cross-origin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"method_code\": \"551d4cbd-0fe3-4a3c-9566-5e2d026ddf12\",\n    \"method_name\": \"fedex\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/carts/{{carts_cartIdUpdated}}/shippingMethods",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"{{carts_cartIdUpdated}}",
+								"shippingMethods"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Add payment method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_uuid\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"method_code\": \"stripe\",\n  \"method_name\": \"stripe\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/carts/{{carts_cartIdUpdated}}/paymentMethods",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"{{carts_cartIdUpdated}}",
+								"paymentMethods"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Method",
+			"item": [
+				{
+					"name": "Payment Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"carts_cartId\", jsonData.data.cartId);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/paymentMethods",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"paymentMethods"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shipping Method",
+			"item": [
+				{
+					"name": "Shipping Method",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"✅ Vérifie le code HTTP\", function () {",
+									"    pm.response.to.have.status(200); // Cela échouera si c'est 404",
+									"});",
+									"",
+									"let jsonData;",
+									"try {",
+									"    jsonData = pm.response.json();",
+									"    pm.test(\"✅ La réponse est un JSON valide\", function () {",
+									"        pm.expect(jsonData).to.be.an(\"object\");",
+									"    });",
+									"",
+									"    if (!jsonData.data) {",
+									"        console.warn(\"⚠️ La propriété 'data' est absente de la réponse.\");",
+									"        console.log(\"Réponse brute : \", jsonData);",
+									"    } else {",
+									"        pm.test(\"✅ 'data.methods' est défini et non vide\", function () {",
+									"            pm.expect(jsonData.data.methods).to.be.an(\"array\").that.is.not.empty;",
+									"        });",
+									"    }",
+									"",
+									"} catch (err) {",
+									"    console.error(\"⛔ Erreur de parsing JSON :\", err.message);",
+									"    pm.test(\"❌ La réponse n'est pas un JSON valide ou ne contient pas les données attendues\", function () {",
+									"        throw new Error(\"Réponse invalide ou structure incorrecte\");",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							},
+							{
+								"key": "country",
+								"value": "FR",
+								"type": "text"
+							},
+							{
+								"key": "province",
+								"value": "FR-ARA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/shippingMethods/{{carts_cartIdUpdated}}?country=FR&province=FR-ARA",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"shippingMethods",
+								"{{carts_cartIdUpdated}}"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "FR"
+								},
+								{
+									"key": "province",
+									"value": "FR-ARA"
+								}
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Promotion",
+			"item": [
+				{
+					"name": "Create a coupon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"promotionId\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"coupon\": \"SUMMER2026\",\n    \"status\": \"1\",\n    \"description\": \"Promo d'été 2025 - 10% de réduction\",\n    \"discount_amount\": 10,\n    \"discount_type\": \"fixed_discount_to_entire_order\",\n    \"free_shipping\": \"1\",\n    \"target_products\": {\n        \"maxQty\": 5,\n        \"products\": [\n            {\n                \"key\": \"collection\",\n                \"operator\": \"IN\",\n                \"value\": \"2\"\n            }\n        ]\n    },\n    \"required_products\": [\n        {\n            \"key\": \"sku\",\n            \"operator\": \"IN\",\n            \"value\": \"SCS-24680\",\n            \"qty\": \"2\"\n        }\n    ],\n\"user_condition\": {\n    \"groups\": [\n        1,\n        2\n    ],\n    \"email\": \"client@example.com\"\n},\n\"start_date\": \"2025-07-01\",\n\"end_date\": \"2025-08-31\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/coupons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"coupons"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a coupon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"promotionId\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"coupon\": \"SUMMER2027\",\n    \"status\": \"1\",\n    \"description\": \"Promo d'été 2025 - 50% de réduction\",\n    \"discount_amount\": 10,\n    \"discount_type\": \"fixed_discount_to_entire_order\",\n    \"free_shipping\": \"1\",\n    \"target_products\": {\n        \"maxQty\": 5,\n        \"products\": [\n            {\n                \"key\": \"collection\",\n                \"operator\": \"IN\",\n                \"value\": \"2\"\n            }\n        ]\n    },\n    \"required_products\": [\n        {\n            \"key\": \"sku\",\n            \"operator\": \"IN\",\n            \"value\": \"SCS-24680\",\n            \"qty\": \"2\"\n        }\n    ],\n\"user_condition\": {\n    \"groups\": [\n        1,\n        2\n    ],\n    \"email\": \"client@example.com\"\n},\n\"start_date\": \"2025-07-01\",\n\"end_date\": \"2025-08-31\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/coupons/{{promotionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"coupons",
+								"{{promotionId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Apply a coupon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const res = pm.response.json();",
+									"",
+									"if (pm.response.code !== 200) {",
+									"    console.error(\"⛔ Statut de réponse invalide :\", pm.response.code);",
+									"    return;",
+									"}",
+									"",
+									"console.log(\"✅ Requête acceptée\");",
+									"",
+									"const cart = res.data;",
+									"",
+									"if (!cart) {",
+									"    console.error(\"⛔ Aucun objet 'data' dans la réponse\");",
+									"    return;",
+									"}",
+									"",
+									"if (cart.coupon !== \"SUMMER2027\") {",
+									"    console.warn(\"⚠️ Coupon non appliqué correctement. Attendu: SUMMER2027, Reçu:\", cart.coupon);",
+									"} else {",
+									"    console.log(\"✅ Coupon appliqué avec succès:\", cart.coupon);",
+									"}",
+									"",
+									"if (cart.discount_amount === 0) {",
+									"    console.warn(\"⚠️ Aucun montant de réduction détecté\");",
+									"} else {",
+									"    console.log(\"💸 Montant de réduction appliqué:\", cart.discount_amount);",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"coupon\": \"SUMMER2027\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/carts/{{carts_cartId}}/coupons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"carts",
+								"{{carts_cartId}}",
+								"coupons"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a coupon",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"promotionId\", jsonData.data.uuid);",
+									"     pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/coupons/{{promotionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"coupons",
+								"{{promotionId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "Create an order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"orderId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cart_id\": \"{{carts_cartIdUpdated}}\",\n    \"payment_method\": {\n        \"method\": \"stripe\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Create a shipment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"shipmentId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carrier_name\": \"La Poste\",\n  \"tracking_number\": \"FR1234567890\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/{{orderId}}/shipments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"{{orderId}}",
+								"shipments"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a shipment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"shipmentId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"carrier_name\": \"La Poste france\",\n  \"tracking_number\": \"FR1234567890\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/orders/{{orderId}}/shipments/{{shipmentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"orders",
+								"{{orderId}}",
+								"shipments",
+								"{{shipmentId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"customerId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": 1,\n  \"email\": \"client2@example.com\",\n  \"password\": \"MotDePasseSecurise123!\",\n  \"full_name\": \"Jean Dupont\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "login a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    //pm.globals.set(\"customerId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"client2@example.com\",\n  \"password\": \"MotDePasseSecurise123!\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"login"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"customerId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": 1,\n  \"email\": \"client@example.com\",\n  \"password\": \"MotDePasseSecurise123!\",\n  \"full_name\": \"Jean Davide\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"{{customerId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "logout a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    //pm.globals.set(\"customerId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customer/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customer",
+								"logout"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"customerId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"{{customerId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cms Page",
+			"item": [
+				{
+					"name": "Create a page",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"pageId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"1\",\n  \"layout\": \"oneColumn\",\n  \"name\": \"À propos de nous\",\n  \"content\": \"<h1>Bienvenue sur notre boutique !</h1><p>Nous sommes passionnés par ce que nous faisons.</p>\",\n  \"url_key\": \"a-propos-de-nous\",\n  \"meta_title\": \"À propos - Ma Boutique\",\n  \"meta_description\": \"En savoir plus sur l'équipe derrière Ma Boutique.\",\n  \"meta_keywords\": \"à propos, ma boutique, e-commerce\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pages",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pages"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a page",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"pageId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"1\",\n  \"layout\": \"oneColumn\",\n  \"name\": \"Gadgets Innovants\",\n  \"content\": \"<h1>Découvrez nos gadgets innovants</h1><p>Explorez notre sélection des gadgets les plus récents et pratiques pour votre quotidien.</p>\",\n  \"url_key\": \"gadgets-innovants\",\n  \"meta_title\": \"Gadgets Innovants - Ma Boutique\",\n  \"meta_description\": \"La meilleure sélection de gadgets tech et accessoires pour vous.\",\n  \"meta_keywords\": \"gadgets, high-tech, accessoires, technologie\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pages/{{pageId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"{{pageId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a page Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    //pm.globals.set(\"pageId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/pages/{{pageId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"pages",
+								"{{pageId}}"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Logout User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"customerId\", jsonData.data.uuid);",
+									"     //pm.environment.set(\"carts_id\", jsonData.data.product_id);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"value": "asid=pPrtew8SYynavexGBgffIpKSwUNugFWx",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{LoginToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/user/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"user",
+								"logout"
+							]
+						},
+						"description": "Generated from cURL: curl\n  -H \"Accept: application/json\"\n  -H \"Cookie: asid=<your admin cookie>\"\n  https://<your domain>/api/attributes"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://postman-integration-testing.glitch.me/"
+		},
+		{
+			"key": "id_attributes",
+			"value": ""
+		}
+	]
+}

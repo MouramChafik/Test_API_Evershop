@@ -1,0 +1,4 @@
+{
+  "email": "client2@example.com",
+  "password": "MotDePasseSecurise123!"
+}

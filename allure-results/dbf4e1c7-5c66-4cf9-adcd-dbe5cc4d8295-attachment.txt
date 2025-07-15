@@ -1,0 +1,24 @@
+{
+  "name": "T-shirt Cool2",
+  "url_key": "tshirt-cool2",
+  "meta_title": "T-shirt Cool pour l’été",
+  "status": 1,
+  "sku": "TSHIRT-COOL-0021",
+  "price": 19.99,
+  "weight": 0.2,
+  "qty": 100,
+  "group_id": 1,
+  "visibility": 1,
+  "options": [
+    {
+      "option_name": "Taille",
+      "option_type": "select",
+      "is_required": 1,
+      "values": [
+        { "value": "S", "extra_price": 0 },
+        { "value": "M", "extra_price": 0 },
+        { "value": "L", "extra_price": 0 }
+      ]
+    }
+  ]
+}

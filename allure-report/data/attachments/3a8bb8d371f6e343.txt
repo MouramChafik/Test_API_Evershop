@@ -1,0 +1,10 @@
+{
+  "status": "1",
+  "layout": "oneColumn",
+  "name": "À propos de nous",
+  "content": "<h1>Bienvenue sur notre boutique !</h1><p>Nous sommes passionnés par ce que nous faisons.</p>",
+  "url_key": "a-propos-de-nous",
+  "meta_title": "À propos - Ma Boutique",
+  "meta_description": "En savoir plus sur l'équipe derrière Ma Boutique.",
+  "meta_keywords": "à propos, ma boutique, e-commerce"
+}

@@ -1,0 +1,14 @@
+{
+  "attribute_name": "Style",
+  "attribute_code": "style",
+  "type": "select",
+  "is_required": 0,
+  "display_on_frontend": 1,
+  "groups": [1],
+  "options": [
+    { "option_text": "Classique" },
+    { "option_text": "Décontracté" },
+    { "option_text": "Élégant" }
+  ]
+}
+

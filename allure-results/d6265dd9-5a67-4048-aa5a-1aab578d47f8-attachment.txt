@@ -1,0 +1,1 @@
+{"data":{"attribute_group_id":56,"uuid":"19d1e43a-fb50-4e55-8116-e1a41704ad64","group_name":"Technical Specs 5","created_at":"2025-07-15T08:50:24.748Z","updated_at":"2025-07-15T08:50:24.748Z"}}

@@ -1,0 +1,19 @@
+{
+  "name": "evershop_test_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node run-tests.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "newman": "^6.2.1",
+    "newman-reporter-allure": "^3.3.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.1.0"
+  }
+}

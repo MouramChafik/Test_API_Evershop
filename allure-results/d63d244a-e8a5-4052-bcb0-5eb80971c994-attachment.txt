@@ -1,0 +1,6 @@
+{
+    "cart_id": "c8e60220-b451-42fe-bf08-53bffeeaab87",
+    "payment_method": {
+        "method": "stripe"
+    }
+}

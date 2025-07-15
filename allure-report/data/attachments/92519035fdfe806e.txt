@@ -1,0 +1,1 @@
+{"data":{"cart_address_id":173,"uuid":"b7809764-07d7-4737-974d-3354cb7c3f24","full_name":"Jean Dupont","postcode":"69002","telephone":"0601020304","country":"FR","province":"FR-ARA","city":"Lyon","address_1":"10 rue de la République","address_2":"Batiment B"}}

@@ -1,0 +1,2 @@
+level: error, messages: Erreur renvoyée par l'API:,Release called on client which has already been released to the pool.
+level: error, messages: Test échoué :,Erreur backend: Release called on client which has already been released to the pool.

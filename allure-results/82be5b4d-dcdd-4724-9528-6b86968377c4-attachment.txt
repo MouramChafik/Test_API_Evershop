@@ -1,0 +1,35 @@
+{
+    "coupon": "SUMMER2026",
+    "status": "1",
+    "description": "Promo d'été 2025 - 10% de réduction",
+    "discount_amount": 10,
+    "discount_type": "fixed_discount_to_entire_order",
+    "free_shipping": "1",
+    "target_products": {
+        "maxQty": 5,
+        "products": [
+            {
+                "key": "collection",
+                "operator": "IN",
+                "value": "2"
+            }
+        ]
+    },
+    "required_products": [
+        {
+            "key": "sku",
+            "operator": "IN",
+            "value": "SCS-24680",
+            "qty": "2"
+        }
+    ],
+"user_condition": {
+    "groups": [
+        1,
+        2
+    ],
+    "email": "client@example.com"
+},
+"start_date": "2025-07-01",
+"end_date": "2025-08-31"
+}

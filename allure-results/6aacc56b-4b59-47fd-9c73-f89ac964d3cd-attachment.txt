@@ -1,0 +1,1 @@
+{"data":{"methods":[{"code":"cod","name":"Cash On Delivery"},{"code":"paypal","name":"Paypal"},{"code":"stripe","name":"Stripe"}]}}

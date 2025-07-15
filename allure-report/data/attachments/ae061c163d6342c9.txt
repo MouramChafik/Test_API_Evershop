@@ -1,0 +1,10 @@
+{
+  "status": "1",
+  "layout": "oneColumn",
+  "name": "Gadgets Innovants",
+  "content": "<h1>Découvrez nos gadgets innovants</h1><p>Explorez notre sélection des gadgets les plus récents et pratiques pour votre quotidien.</p>",
+  "url_key": "gadgets-innovants",
+  "meta_title": "Gadgets Innovants - Ma Boutique",
+  "meta_description": "La meilleure sélection de gadgets tech et accessoires pour vous.",
+  "meta_keywords": "gadgets, high-tech, accessoires, technologie"
+}
